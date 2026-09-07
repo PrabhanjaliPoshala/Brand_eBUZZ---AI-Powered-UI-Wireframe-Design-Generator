@@ -1,0 +1,8 @@
+{
+  "name": "Remix AI-Driven Wireframe and Design Concept Platform",
+  "description": "Turn ideas and natural-language requirements into structured wireframes, layouts, and interactive design concepts with AI analysis, visual editing, version control, and multi-format export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

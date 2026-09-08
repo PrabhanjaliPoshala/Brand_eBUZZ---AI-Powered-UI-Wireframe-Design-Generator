@@ -74,12 +74,12 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),transparent_18%),linear-gradient(180deg,#f8fafc_0%,#f4f4f5_100%)] flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-10">
           <Link to="/" className="inline-flex items-center gap-2.5 group mb-6">
-            <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-105 transition">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-105 transition">
               <Sparkles className="w-6 h-6" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-zinc-900 hidden sm:inline">
@@ -87,11 +87,16 @@ export const LoginPage: React.FC = () => {
             </span>
           </Link>
           <h1 className="text-3xl font-bold text-zinc-900 mb-2">Welcome back</h1>
-          <p className="text-zinc-600">Sign in to continue to Wireframe Studio</p>
+          <p className="text-zinc-600">Sign in to continue building polished product concepts</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-xl shadow-blue-900/10 border border-zinc-200 p-8">
+        <div className="bg-white/90 rounded-[28px] shadow-[0_30px_80px_-30px_rgba(15,23,42,0.35)] border border-zinc-200 p-8 backdrop-blur-sm">
+          <div className="mb-6 flex items-center justify-between rounded-2xl border border-blue-100 bg-blue-50 px-3 py-2 text-[11px] font-semibold text-blue-700">
+            <span>Secure workspace access</span>
+            <span className="rounded-full bg-white px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-blue-700">Live</span>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-4">
             {error && (
               <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
@@ -109,7 +114,7 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-2.5 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-2.5 border border-zinc-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-zinc-50 focus:bg-white"
                 required
               />
             </div>
@@ -124,7 +129,7 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-2.5 border border-zinc-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-zinc-50 focus:bg-white"
                 required
               />
             </div>
@@ -132,7 +137,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2.5 rounded-lg transition flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-blue-400 disabled:to-indigo-400 text-white font-semibold py-2.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
             >
               {loading && <Loader className="w-4 h-4 animate-spin" />}
               {loading ? 'Signing in...' : 'Sign in'}

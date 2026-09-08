@@ -171,7 +171,7 @@ export const PublicPreviewPage: React.FC = () => {
         )}
 
         <div
-          className={`transition-all duration-200 shadow-xl rounded-2xl overflow-hidden bg-white ${
+          className={`transition-all duration-200 shadow-xl rounded-2xl overflow-y-auto overflow-x-hidden bg-white ${
             device !== 'desktop'
               ? 'border-[10px] border-zinc-800 ring-1 ring-zinc-900/10'
               : 'border border-zinc-200 w-full max-w-6xl'

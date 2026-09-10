@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Project, DeviceType } from '../types';
 import { store } from '../services/store';
 import { CanvasElementRenderer } from '../components/CanvasElementRenderer';
+import { BrandLockup } from '../components/BrandLockup';
 import {
   Monitor,
   Tablet,
@@ -68,6 +69,7 @@ export const PublicPreviewPage: React.FC = () => {
             <span>Open in Editor</span>
           </button>
           <div className="h-4 w-px bg-zinc-200" />
+          <BrandLockup compact />
           <div>
             <h1 className="text-sm font-bold text-zinc-900">{project.name}</h1>
             <span className="text-[10px] text-zinc-400 font-mono">Live Interactive Preview</span>
@@ -76,6 +78,7 @@ export const PublicPreviewPage: React.FC = () => {
 
         {/* Device and Mode Switcher */}
         <div className="flex items-center space-x-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 xl:inline">Msoft Technologies</span>
           <div className="flex items-center bg-zinc-100 p-1 rounded-lg border border-zinc-200">
             <button
               type="button"
@@ -171,7 +174,7 @@ export const PublicPreviewPage: React.FC = () => {
         )}
 
         <div
-          className={`transition-all duration-200 shadow-xl rounded-2xl overflow-hidden bg-white ${
+          className={`transition-all duration-200 shadow-xl rounded-2xl overflow-y-auto overflow-x-hidden bg-white ${
             device !== 'desktop'
               ? 'border-[10px] border-zinc-800 ring-1 ring-zinc-900/10'
               : 'border border-zinc-200 w-full max-w-6xl'

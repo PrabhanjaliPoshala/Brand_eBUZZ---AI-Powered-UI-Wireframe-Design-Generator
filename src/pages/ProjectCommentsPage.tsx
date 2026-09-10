@@ -16,6 +16,7 @@ import {
   Sparkles,
   Layers,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const ProjectCommentsPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -102,6 +103,7 @@ export const ProjectCommentsPage: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-base font-bold text-zinc-900">{project.name}</h1>
@@ -114,6 +116,7 @@ export const ProjectCommentsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           <Link
             to={`/projects/${project.id}/editor`}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-md shadow-blue-600/20 transition"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DomainType, DeviceType, BrandPreset } from '../types';
 import { parseRequirementWithAI, generateWireframeFromAnalysis } from '../services/aiService';
+import { BrandLockup } from '../components/BrandLockup';
 import { store } from '../services/store';
 import {
   Sparkles,
@@ -159,6 +160,7 @@ export const ProjectCreationPage: React.FC = () => {
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
+          <BrandLockup compact />
           <div className="flex items-center space-x-2">
             <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
               AI
@@ -168,7 +170,8 @@ export const ProjectCreationPage: React.FC = () => {
             </span>
           </div>
         </div>
-        <div className="text-xs text-zinc-400 font-medium">
+        <div className="flex items-center gap-4 text-xs text-zinc-400 font-medium">
+          <span className="hidden text-zinc-500 md:inline">Msoft Technologies</span>
           Step 1: Requirement Specification
         </div>
       </header>

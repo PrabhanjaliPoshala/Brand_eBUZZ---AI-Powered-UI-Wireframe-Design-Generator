@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Activity,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const AnalyticsPage: React.FC = () => {
   const [events, setEvents] = useState<AnalyticsEvent[]>(() => store.getAnalyticsEvents());
@@ -45,6 +46,7 @@ export const AnalyticsPage: React.FC = () => {
           <Link to="/dashboard" className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition">
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold text-zinc-900">Platform Analytics</h1>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200">
@@ -54,6 +56,7 @@ export const AnalyticsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           <Link
             to="/dashboard"
             className="px-3.5 py-1.5 rounded-xl border border-zinc-300 text-zinc-700 text-xs font-semibold hover:bg-zinc-100 transition"

@@ -23,6 +23,7 @@ import {
   Monitor,
   CheckCircle2,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const ProjectDetailPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -80,6 +81,7 @@ export const ProjectDetailPage: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-base font-bold text-zinc-900">{project.name}</h1>
@@ -92,6 +94,7 @@ export const ProjectDetailPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2.5">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           <button
             onClick={handleDelete}
             className="p-2 rounded-xl text-zinc-400 hover:text-red-600 hover:bg-red-50 transition"

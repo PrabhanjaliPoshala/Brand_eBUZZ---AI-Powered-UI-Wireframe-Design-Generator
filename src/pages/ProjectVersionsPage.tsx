@@ -16,6 +16,7 @@ import {
   ExternalLink,
   GitCompare,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const ProjectVersionsPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -108,6 +109,7 @@ export const ProjectVersionsPage: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-base font-bold text-zinc-900">{project.name}</h1>
@@ -120,6 +122,7 @@ export const ProjectVersionsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           {restoredSuccess && (
             <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
               <CheckCircle2 className="w-4 h-4" />

@@ -143,6 +143,13 @@ class StoreService {
     }
     if (!localStorage.getItem(TEMPLATES_STORAGE_KEY)) {
       this.setItem(TEMPLATES_STORAGE_KEY, initialTemplates);
+    } else {
+      const storedTemplates = this.getItem<Template[]>(TEMPLATES_STORAGE_KEY, []);
+      const storedIds = new Set(storedTemplates.map((template) => template.id));
+      const missingTemplates = initialTemplates.filter((template) => !storedIds.has(template.id));
+      if (missingTemplates.length > 0) {
+        this.setItem(TEMPLATES_STORAGE_KEY, [...storedTemplates, ...missingTemplates]);
+      }
     }
     if (!localStorage.getItem(JOBS_STORAGE_KEY)) {
       const initialJobs: GenerationJob[] = [
@@ -328,23 +335,7 @@ class StoreService {
       return { success: true, user: found };
     }
 
-    // Auto-register demo preview account
-    const role: UserRole = email.toLowerCase().includes('admin')
-      ? 'admin'
-      : email.toLowerCase().includes('design')
-      ? 'designer'
-      : 'user';
-
-    const newUser = this.addUser({
-      name: email.split('@')[0],
-      email,
-      role,
-      status: 'active',
-      avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(email)}`,
-    });
-    this.setCurrentUser(newUser);
-    this.recordAnalyticsEvent('user_login', undefined, undefined, { email, role });
-    return { success: true, user: newUser };
+    return { success: false, error: 'Invalid email or password.' };
   }
 
   async signup(

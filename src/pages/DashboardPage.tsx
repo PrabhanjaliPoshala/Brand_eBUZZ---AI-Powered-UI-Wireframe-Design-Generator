@@ -25,6 +25,7 @@ import {
   Image as ImageIcon,
 } from 'lucide-react';
 import { NotificationsPopover } from '../components/NotificationsPopover';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -98,214 +99,207 @@ export const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50/70 text-zinc-900 flex flex-col">
-      {/* Navigation Bar */}
-      <header className="h-16 border-b border-zinc-200 bg-white px-6 md:px-10 flex items-center justify-between shadow-2xs sticky top-0 z-30">
-        <div className="flex items-center space-x-8">
-          <div
-            onClick={() => navigate('/dashboard')}
-            className="flex items-center space-x-2.5 cursor-pointer"
-          >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-sm shadow-xs">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="font-extrabold text-base tracking-tight text-zinc-900 block leading-tight">
-                WireframeOS
-              </span>
-              <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">
-                Autonomous Design Platform
-              </span>
-            </div>
-          </div>
-
-          <nav className="hidden lg:flex items-center space-x-6 text-xs font-bold text-zinc-600">
-            <span
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.08),transparent_18%),linear-gradient(180deg,#f8fafc_0%,#f4f4f5_100%)] text-zinc-900 flex flex-col">
+      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-white/75 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
+          <div className="flex items-center space-x-8">
+            <div
               onClick={() => navigate('/dashboard')}
-              className="text-zinc-900 cursor-pointer border-b-2 border-zinc-900 pb-1"
+              className="flex cursor-pointer items-center space-x-2.5"
             >
-              Dashboard
-            </span>
-            <span
-              onClick={() => navigate('/projects')}
-              className="hover:text-zinc-900 cursor-pointer transition-colors"
-            >
-              All Projects
-            </span>
-            <span
-              onClick={() => navigate('/templates')}
-              className="hover:text-zinc-900 cursor-pointer transition-colors"
-            >
-              Templates
-            </span>
-            <span
-              onClick={() => navigate('/assets')}
-              className="hover:text-zinc-900 cursor-pointer transition-colors"
-            >
-              Assets
-            </span>
-            <span
-              onClick={() => navigate('/analytics')}
-              className="hover:text-zinc-900 cursor-pointer transition-colors"
-            >
-              Analytics
-            </span>
-            <span
-              onClick={() => navigate('/settings')}
-              className="hover:text-zinc-900 cursor-pointer transition-colors"
-            >
-              Settings
-            </span>
-            {currentUser.role === 'admin' && (
+              <BrandLockup />
+            </div>
+
+            <nav className="hidden items-center space-x-6 text-xs font-bold text-zinc-600 lg:flex">
               <span
-                onClick={() => navigate('/admin')}
-                className="hover:text-zinc-900 cursor-pointer transition-colors flex items-center space-x-1 text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md"
+                onClick={() => navigate('/dashboard')}
+                className="cursor-pointer border-b-2 border-zinc-900 pb-1 text-zinc-900"
               >
-                <Shield className="w-3.5 h-3.5" />
-                <span>Admin</span>
+                Dashboard
               </span>
-            )}
-          </nav>
-        </div>
-
-        {/* User Switcher / Profile */}
-        <div className="flex items-center space-x-3">
-          {/* Notifications */}
-          <NotificationsPopover />
-
-          {/* Quick Role Switcher */}
-          <div className="hidden sm:flex items-center space-x-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200 text-xs">
-            <span className="text-[10px] uppercase font-bold text-zinc-400 pl-2">Role:</span>
-            {allUsers.map((u) => (
-              <button
-                key={u.id}
-                type="button"
-                onClick={() => store.setCurrentUser(u)}
-                className={`px-2 py-1 rounded-lg text-xs font-semibold capitalize transition-all ${
-                  currentUser.id === u.id
-                    ? 'bg-white text-zinc-900 shadow-xs font-bold'
-                    : 'text-zinc-500 hover:text-zinc-800'
-                }`}
+              <span
+                onClick={() => navigate('/projects')}
+                className="cursor-pointer transition-colors hover:text-zinc-900"
               >
-                {u.role}
-              </button>
-            ))}
+                All Projects
+              </span>
+              <span
+                onClick={() => navigate('/templates')}
+                className="cursor-pointer transition-colors hover:text-zinc-900"
+              >
+                Templates
+              </span>
+              <span
+                onClick={() => navigate('/assets')}
+                className="cursor-pointer transition-colors hover:text-zinc-900"
+              >
+                Assets
+              </span>
+              <span
+                onClick={() => navigate('/analytics')}
+                className="cursor-pointer transition-colors hover:text-zinc-900"
+              >
+                Analytics
+              </span>
+              <span
+                onClick={() => navigate('/settings')}
+                className="cursor-pointer transition-colors hover:text-zinc-900"
+              >
+                Settings
+              </span>
+              {currentUser.role === 'admin' && (
+                <span
+                  onClick={() => navigate('/admin')}
+                  className="flex items-center space-x-1 rounded-md bg-purple-50 px-2 py-0.5 text-purple-700 transition-colors hover:text-zinc-900"
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>Admin</span>
+                </span>
+              )}
+            </nav>
           </div>
 
-          <button
-            type="button"
-            onClick={() => navigate('/projects/new')}
-            className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center space-x-1.5 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            <span>New Wireframe</span>
-          </button>
+          <div className="flex items-center space-x-3">
+            <span className="hidden text-xs font-semibold text-zinc-500 xl:inline">Msoft Technologies</span>
+            <NotificationsPopover />
 
-          <button
-            type="button"
-            title="Log out"
-            onClick={() => {
-              store.signOut();
-              navigate('/login');
-            }}
-            className="p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-xl transition"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6 md:p-10 space-y-10">
-        {/* Hero Banner & KPI Stats */}
-        <div>
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
-                Design & Wireframe Workspace
-              </h1>
-              <p className="text-sm text-zinc-500 mt-1">
-                Translate natural language requirements into structured wireframe concepts in seconds.
-              </p>
+            <div className="hidden items-center space-x-1 rounded-xl border border-zinc-200 bg-zinc-100 p-1 text-xs sm:flex">
+              <span className="pl-2 text-[10px] font-bold uppercase text-zinc-400">Role:</span>
+              {allUsers.map((u) => (
+                <button
+                  key={u.id}
+                  type="button"
+                  onClick={() => store.setCurrentUser(u)}
+                  className={`rounded-lg px-2 py-1 text-xs font-semibold capitalize transition-all ${
+                    currentUser.id === u.id
+                      ? 'bg-white text-zinc-900 shadow-xs font-bold'
+                      : 'text-zinc-500 hover:text-zinc-800'
+                  }`}
+                >
+                  {u.role}
+                </button>
+              ))}
             </div>
+
             <button
               type="button"
               onClick={() => navigate('/projects/new')}
-              className="self-start md:self-auto px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold rounded-xl shadow-md flex items-center space-x-2"
+              className="flex items-center space-x-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-blue-700"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>Generate New Wireframe</span>
+              <Plus className="w-4 h-4" />
+              <span>New Wireframe</span>
+            </button>
+
+            <button
+              type="button"
+              title="Log out"
+              onClick={() => {
+                store.signOut();
+                navigate('/login');
+              }}
+              className="rounded-xl p-2 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700"
+            >
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
+        </div>
+      </header>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-2xs">
-              <div className="text-xs font-medium text-zinc-400 mb-1 flex items-center justify-between">
-                <span>Active Projects</span>
-                <Layout className="w-4 h-4 text-blue-500" />
-              </div>
-              <div className="text-2xl font-black text-zinc-900">{projects.length}</div>
-              <div className="text-[11px] text-emerald-600 font-semibold mt-1 flex items-center space-x-1">
-                <TrendingUp className="w-3 h-3" />
-                <span>Ready in workspace</span>
-              </div>
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-6 py-8 md:px-10 md:py-10">
+        <section className="overflow-hidden rounded-[28px] border border-zinc-200 bg-gradient-to-br from-slate-900 via-zinc-900 to-blue-950 p-6 text-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.8)] md:p-8">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-100">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                Creative workspace
+              </span>
+              <h1 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
+                Design and wireframe projects at speed.
+              </h1>
+              <p className="mt-4 max-w-xl text-sm text-slate-300 md:text-base">
+                Turn ideas into structured product flows, review live previews, and launch polished experiences from a single workspace.
+              </p>
             </div>
 
-            <div className="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-2xs">
-              <div className="text-xs font-medium text-zinc-400 mb-1 flex items-center justify-between">
-                <span>AI Generations</span>
-                <Sparkles className="w-4 h-4 text-indigo-500" />
-              </div>
-              <div className="text-2xl font-black text-zinc-900">{jobs.length}</div>
-              <div className="text-[11px] text-zinc-500 font-medium mt-1">
-                Gemini 3.8 Flash model
-              </div>
-            </div>
-
-            <div className="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-2xs">
-              <div className="text-xs font-medium text-zinc-400 mb-1 flex items-center justify-between">
-                <span>Total Exports</span>
-                <Download className="w-4 h-4 text-emerald-500" />
-              </div>
-              <div className="text-2xl font-black text-zinc-900">{exports.length}</div>
-              <div className="text-[11px] text-zinc-500 font-medium mt-1">HTML, JSON & Spec</div>
-            </div>
-
-            <div className="bg-white border border-zinc-200/80 rounded-2xl p-4 shadow-2xs">
-              <div className="text-xs font-medium text-zinc-400 mb-1 flex items-center justify-between">
-                <span>Templates Available</span>
-                <Layers className="w-4 h-4 text-purple-500" />
-              </div>
-              <div className="text-2xl font-black text-zinc-900">{templates.length}</div>
-              <div className="text-[11px] text-purple-600 font-semibold mt-1">Pre-configured Kits</div>
+            <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[320px]">
+              {[
+                { label: 'Active projects', value: String(projects.length) },
+                { label: 'AI generations', value: String(jobs.length) },
+                { label: 'Templates', value: String(templates.length) },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-sm">
+                  <div className="text-xl font-black text-white">{stat.value}</div>
+                  <div className="text-[10px] uppercase tracking-[0.15em] text-slate-300">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Projects Section with Search & Filter */}
-        <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-            <h2 className="text-lg font-bold text-zinc-900">Your Wireframe Projects</h2>
+        <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)]">
+            <div className="mb-1 flex items-center justify-between text-xs font-medium text-zinc-400">
+              <span>Active projects</span>
+              <Layout className="w-4 h-4 text-blue-500" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900">{projects.length}</div>
+            <div className="mt-1 flex items-center space-x-1 text-[11px] font-semibold text-emerald-600">
+              <TrendingUp className="w-3 h-3" />
+              <span>Ready in workspace</span>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)]">
+            <div className="mb-1 flex items-center justify-between text-xs font-medium text-zinc-400">
+              <span>AI generations</span>
+              <Sparkles className="w-4 h-4 text-indigo-500" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900">{jobs.length}</div>
+            <div className="mt-1 text-[11px] font-medium text-zinc-500">Gemini 3.8 Flash model</div>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)]">
+            <div className="mb-1 flex items-center justify-between text-xs font-medium text-zinc-400">
+              <span>Total exports</span>
+              <Download className="w-4 h-4 text-emerald-500" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900">{exports.length}</div>
+            <div className="mt-1 text-[11px] font-medium text-zinc-500">HTML, JSON & Spec</div>
+          </div>
+
+          <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)]">
+            <div className="mb-1 flex items-center justify-between text-xs font-medium text-zinc-400">
+              <span>Templates</span>
+              <Layers className="w-4 h-4 text-purple-500" />
+            </div>
+            <div className="text-2xl font-black text-zinc-900">{templates.length}</div>
+            <div className="mt-1 text-[11px] font-semibold text-purple-600">Pre-configured kits</div>
+          </div>
+        </section>
+
+        <section className="rounded-[28px] border border-zinc-200 bg-white p-5 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)] md:p-6">
+          <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-zinc-900">Your wireframe projects</h2>
+              <p className="mt-1 text-xs text-zinc-500">Filter, find, and continue working on the right concept.</p>
+            </div>
 
             <div className="flex flex-wrap items-center gap-2.5 text-xs">
-              {/* Search Bar */}
               <div className="relative flex-1 sm:w-64">
-                <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-2.5" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 bg-white border border-zinc-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:outline-hidden"
+                  className="w-full rounded-lg border border-zinc-300 bg-white py-1.5 pl-9 pr-3 text-xs text-zinc-800 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
                 />
               </div>
 
-              {/* Domain Filter */}
               <select
                 value={domainFilter}
                 onChange={(e) => setDomainFilter(e.target.value as any)}
-                className="px-3 py-1.5 bg-white border border-zinc-300 rounded-lg text-xs font-medium text-zinc-700 focus:outline-hidden"
+                className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-xs font-medium text-zinc-700 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
                 <option value="all">All Domains</option>
                 <option value="food_delivery">Food Delivery</option>
@@ -317,11 +311,10 @@ export const DashboardPage: React.FC = () => {
                 <option value="education">Education</option>
               </select>
 
-              {/* Status Filter */}
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-3 py-1.5 bg-white border border-zinc-300 rounded-lg text-xs font-medium text-zinc-700 focus:outline-hidden"
+                className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-xs font-medium text-zinc-700 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
                 <option value="all">All Statuses</option>
                 <option value="generated">Generated</option>
@@ -331,49 +324,67 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Project Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((proj) => (
               <div
                 key={proj.id}
                 onClick={() => navigate(`/projects/${proj.id}/editor`)}
-                className="bg-white border border-zinc-200/90 hover:border-blue-500 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col group"
+                className="group flex cursor-pointer flex-col overflow-hidden rounded-[22px] border border-zinc-200 bg-white shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)] transition-all hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_24px_45px_-24px_rgba(37,99,235,0.45)]"
               >
-                {/* Visual Thumbnail / Header Preview */}
-                <div className="h-36 bg-gradient-to-b from-zinc-100 to-zinc-50 border-b border-zinc-100 p-4 flex flex-col justify-between relative overflow-hidden">
-                  <div className="flex items-center justify-between z-10">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100/80 text-blue-800 border border-blue-200">
+                <div className={`relative h-36 overflow-hidden p-4 ${
+                  proj.domain === 'food_delivery'
+                    ? 'bg-gradient-to-br from-orange-50 via-white to-rose-50'
+                    : proj.domain === 'ecommerce'
+                      ? 'bg-gradient-to-br from-amber-50 via-white to-pink-50'
+                      : proj.domain === 'saas'
+                        ? 'bg-gradient-to-br from-blue-50 via-white to-indigo-50'
+                        : proj.domain === 'dashboard'
+                          ? 'bg-gradient-to-br from-slate-100 via-white to-emerald-50'
+                          : proj.domain === 'portfolio'
+                            ? 'bg-gradient-to-br from-fuchsia-50 via-white to-violet-50'
+                            : proj.domain === 'healthcare'
+                              ? 'bg-gradient-to-br from-cyan-50 via-white to-teal-50'
+                              : proj.domain === 'education'
+                                ? 'bg-gradient-to-br from-yellow-50 via-white to-sky-50'
+                                : 'bg-gradient-to-br from-zinc-100 via-white to-blue-50'
+                }`}>
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                      proj.domain === 'food_delivery' ? 'border-orange-200 bg-orange-100/80 text-orange-800' :
+                      proj.domain === 'ecommerce' ? 'border-amber-200 bg-amber-100/80 text-amber-800' :
+                      proj.domain === 'saas' ? 'border-blue-200 bg-blue-100/80 text-blue-800' :
+                      proj.domain === 'dashboard' ? 'border-emerald-200 bg-emerald-100/80 text-emerald-800' :
+                      proj.domain === 'portfolio' ? 'border-fuchsia-200 bg-fuchsia-100/80 text-fuchsia-800' :
+                      proj.domain === 'healthcare' ? 'border-cyan-200 bg-cyan-100/80 text-cyan-800' :
+                      proj.domain === 'education' ? 'border-yellow-200 bg-yellow-100/80 text-yellow-800' :
+                      'border-blue-200 bg-blue-100/80 text-blue-800'
+                    }`}>
                       {proj.domain.replace('_', ' ')}
                     </span>
-                    <span className="text-[10px] text-zinc-400 font-mono">
-                      {proj.wireframe.elements.length} elements
-                    </span>
+                    <span className="font-mono text-[10px] text-zinc-400">{proj.wireframe.elements.length} elements</span>
                   </div>
 
-                  {/* Blueprint visual wire lines */}
-                  <div className="space-y-1.5 opacity-60">
-                    <div className="h-3 w-3/4 bg-zinc-300 rounded-xs"></div>
-                    <div className="h-2 w-1/2 bg-zinc-200 rounded-xs"></div>
-                    <div className="flex space-x-2 pt-1">
-                      <div className="h-6 flex-1 bg-zinc-200 rounded-sm"></div>
-                      <div className="h-6 flex-1 bg-zinc-200 rounded-sm"></div>
-                      <div className="h-6 flex-1 bg-zinc-200 rounded-sm"></div>
-                    </div>
+                  <div className="absolute inset-x-4 bottom-4 top-11 rounded-xl border border-white/80 bg-white/75 p-3 shadow-sm">
+                    {proj.domain === 'dashboard' ? (
+                      <div className="grid h-full grid-cols-[0.55fr_1.45fr] gap-2"><div className="rounded-lg bg-emerald-100" /><div className="space-y-2"><div className="h-6 rounded-lg bg-emerald-50" /><div className="grid grid-cols-2 gap-2"><div className="h-7 rounded-lg bg-zinc-100" /><div className="h-7 rounded-lg bg-zinc-100" /></div></div></div>
+                    ) : proj.domain === 'ecommerce' ? (
+                      <div className="grid h-full grid-cols-3 gap-2"><div className="col-span-2 rounded-lg bg-rose-100" /><div className="rounded-lg bg-amber-100" /><div className="h-5 rounded bg-zinc-100" /><div className="h-5 rounded bg-zinc-100" /><div className="h-5 rounded bg-zinc-100" /></div>
+                    ) : (
+                      <div className="flex h-full items-end gap-3"><div className="flex-1 space-y-2"><div className="h-3 w-4/5 rounded-full bg-zinc-300" /><div className="h-2 w-3/5 rounded-full bg-zinc-200" /><div className="h-5 w-1/3 rounded-lg bg-blue-400/70" /></div><div className="h-full w-1/3 rounded-lg bg-blue-100/80" /></div>
+                    )}
                   </div>
-
-                  <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-colors" />
+                  <div className="absolute inset-0 bg-blue-600/0 transition-colors group-hover:bg-blue-600/5" />
                 </div>
 
-                {/* Project Info */}
-                <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="font-extrabold text-zinc-900 text-base group-hover:text-blue-600 transition-colors">
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-base font-extrabold tracking-tight text-zinc-900 group-hover:text-blue-600">
                     {proj.name}
                   </h3>
-                  <p className="text-xs text-zinc-500 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="mt-1.5 text-xs leading-relaxed text-zinc-500">
                     {proj.description || proj.requirement}
                   </p>
 
-                  <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-400">
+                  <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs text-zinc-400">
                     <span className="flex items-center space-x-1">
                       <Clock className="w-3 h-3" />
                       <span>{new Date(proj.updatedAt).toLocaleDateString()}</span>
@@ -384,7 +395,7 @@ export const DashboardPage: React.FC = () => {
                         type="button"
                         title="Duplicate"
                         onClick={(e) => handleDuplicateProject(e, proj)}
-                        className="p-1 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-800 rounded-md transition-colors"
+                        className="rounded-md p-1 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-800"
                       >
                         <Copy className="w-3.5 h-3.5" />
                       </button>
@@ -392,7 +403,7 @@ export const DashboardPage: React.FC = () => {
                         type="button"
                         title="Delete"
                         onClick={(e) => handleDeleteProject(e, proj.id)}
-                        className="p-1 hover:bg-red-50 text-zinc-400 hover:text-red-600 rounded-md transition-colors"
+                        className="rounded-md p-1 text-zinc-400 transition hover:bg-red-50 hover:text-red-600"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -402,68 +413,62 @@ export const DashboardPage: React.FC = () => {
               </div>
             ))}
 
-            {/* "+ Create Project" placeholder card */}
             <div
               onClick={() => navigate('/projects/new')}
-              className="border-2 border-dashed border-zinc-300 hover:border-blue-500 hover:bg-blue-50/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all min-h-[220px] group"
+              className="group flex min-h-[250px] cursor-pointer flex-col items-center justify-center rounded-[22px] border-2 border-dashed border-zinc-300 bg-white/60 p-8 text-center transition-all hover:border-blue-500 hover:bg-blue-50/20"
             >
-              <div className="w-12 h-12 rounded-full bg-zinc-100 group-hover:bg-blue-100 group-hover:text-blue-600 flex items-center justify-center text-zinc-400 mb-3 transition-colors">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 transition-colors group-hover:bg-blue-100 group-hover:text-blue-600">
                 <Plus className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-zinc-900 text-sm group-hover:text-blue-600 transition-colors">
-                Create New Project
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1 max-w-[200px]">
+              <h3 className="text-sm font-bold text-zinc-900 group-hover:text-blue-600">Create New Project</h3>
+              <p className="mt-1 max-w-[200px] text-xs text-zinc-400">
                 Describe your application requirement in plain English.
               </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Template Gallery Section */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
+        <section className="rounded-[28px] border border-zinc-200 bg-white p-5 shadow-[0_18px_35px_-25px_rgba(15,23,42,0.35)] md:p-6">
+          <div className="mb-5 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-zinc-900">Recommended Templates</h2>
-              <p className="text-xs text-zinc-500 mt-0.5">Kickstart your design with curated industry concepts</p>
+              <h2 className="text-lg font-bold text-zinc-900">Recommended templates</h2>
+              <p className="mt-1 text-xs text-zinc-500">Kickstart your design with curated industry concepts.</p>
             </div>
             <button
               type="button"
               onClick={() => navigate('/templates')}
-              className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center space-x-1"
+              className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 transition hover:text-blue-700"
             >
-              <span>View All ({templates.length})</span>
+              <span>View all ({templates.length})</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {templates.slice(0, 4).map((tmpl) => (
               <div
                 key={tmpl.id}
                 onClick={() => handleCreateFromTemplate(tmpl)}
-                className="bg-white border border-zinc-200 hover:border-zinc-300 rounded-xl p-4 shadow-2xs hover:shadow-xs cursor-pointer transition-all flex flex-col justify-between"
+                className="flex cursor-pointer flex-col justify-between rounded-[20px] border border-zinc-200 bg-white p-4 shadow-[0_12px_25px_-20px_rgba(15,23,42,0.35)] transition-all hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_18px_35px_-24px_rgba(15,23,42,0.4)]"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-700">
                       {tmpl.category}
                     </span>
-                    <span className="text-[10px] text-zinc-400 font-mono">
-                      {tmpl.elementCount} blocks
-                    </span>
+                    <span className="font-mono text-[10px] text-zinc-400">{tmpl.elementCount} blocks</span>
                   </div>
-                  <h3 className="font-bold text-zinc-900 text-sm mb-1">{tmpl.name}</h3>
-                  <p className="text-xs text-zinc-500 line-clamp-2">{tmpl.description}</p>
+                  <h3 className="text-sm font-extrabold text-zinc-900">{tmpl.name}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-zinc-500">{tmpl.description}</p>
                 </div>
-                <div className="pt-4 mt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-blue-600 font-bold">
+                <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-4 text-xs font-bold text-blue-600">
                   <span>Use Template</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );

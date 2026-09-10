@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { store } from '../services/store';
 import { UserRole } from '../types';
 import { Sparkles, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const SignupPage: React.FC = () => {
   const navigate = useNavigate();
@@ -63,9 +64,7 @@ export const SignupPage: React.FC = () => {
           <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-105 transition">
             <Sparkles className="w-5 h-5" />
           </div>
-          <span className="text-2xl font-bold tracking-tight text-zinc-900">
-            Wireframe<span className="text-blue-600">AI</span>
-          </span>
+          <BrandLockup />
         </Link>
         <h2 className="text-2xl font-bold tracking-tight text-zinc-900">Create your free account</h2>
         <p className="mt-1 text-sm text-zinc-600">

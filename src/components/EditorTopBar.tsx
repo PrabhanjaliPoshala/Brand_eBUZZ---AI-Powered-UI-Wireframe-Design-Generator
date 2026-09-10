@@ -24,6 +24,7 @@ import {
   MessageSquare,
   Cpu,
 } from 'lucide-react';
+import { BrandLockup } from './BrandLockup';
 
 interface Props {
   project: Project;
@@ -84,6 +85,7 @@ export const EditorTopBar: React.FC<Props> = ({
         </button>
 
         <div className="h-4 w-px bg-zinc-200" />
+        <BrandLockup compact />
 
         <div>
           <div className="flex items-center space-x-2">
@@ -120,6 +122,7 @@ export const EditorTopBar: React.FC<Props> = ({
 
       {/* Middle: Device & Mode Switcher & Undo/Redo & Zoom */}
       <div className="flex items-center space-x-3">
+        <span className="hidden text-xs font-semibold text-zinc-500 xl:inline">Msoft Technologies</span>
         {/* Device Switcher */}
         <div className="flex items-center bg-zinc-100 p-1 rounded-lg border border-zinc-200">
           <button

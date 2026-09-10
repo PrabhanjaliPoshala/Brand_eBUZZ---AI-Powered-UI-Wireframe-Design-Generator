@@ -17,6 +17,7 @@ import {
   Code,
   Save,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const SettingsPage: React.FC = () => {
   const currentUser = store.getCurrentUser();
@@ -72,6 +73,7 @@ CREATE TABLE IF NOT EXISTS public.pages (
           <Link to="/dashboard" className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition">
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div className="flex items-center gap-2">
             <h1 className="text-base font-bold text-zinc-900">Workspace Settings</h1>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-zinc-100 text-zinc-700 font-semibold border border-zinc-200">
@@ -81,6 +83,7 @@ CREATE TABLE IF NOT EXISTS public.pages (
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           <Link
             to="/dashboard"
             className="px-3.5 py-1.5 rounded-xl border border-zinc-300 text-zinc-700 text-xs font-semibold hover:bg-zinc-100 transition"

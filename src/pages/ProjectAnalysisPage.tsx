@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { store, subscribeToStore } from '../services/store';
 import { Project, DomainType } from '../types';
 import { generatePagesFromAnalysis, generateWireframeFromAnalysis } from '../services/aiService';
+import { BrandLockup } from '../components/BrandLockup';
 import {
   Sparkles,
   ArrowRight,
@@ -235,6 +236,7 @@ export const ProjectAnalysisPage: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
+          <BrandLockup compact />
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-base font-bold text-zinc-900">{project.name}</h1>
@@ -247,6 +249,7 @@ export const ProjectAnalysisPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           {savedSuccess && (
             <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
               <CheckCircle2 className="w-4 h-4" />

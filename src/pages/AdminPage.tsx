@@ -19,6 +19,7 @@ import {
   Search,
   Lock,
 } from 'lucide-react';
+import { BrandLockup } from '../components/BrandLockup';
 
 export const AdminPage: React.FC = () => {
   const navigate = useNavigate();
@@ -152,6 +153,7 @@ export const AdminPage: React.FC = () => {
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
+          <BrandLockup compact />
           <div className="flex items-center space-x-2.5">
             <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white font-bold text-xs">
               <Shield className="w-4 h-4" />
@@ -168,6 +170,7 @@ export const AdminPage: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-2 text-xs">
+          <span className="hidden text-xs font-semibold text-zinc-500 md:inline">Msoft Technologies</span>
           <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold flex items-center space-x-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>AI System Normal</span>
@@ -307,8 +310,8 @@ export const AdminPage: React.FC = () => {
               <div className="bg-white border border-zinc-200 rounded-2xl p-5 shadow-2xs">
                 <h3 className="font-bold text-zinc-900 text-sm mb-3">Recent System Events</h3>
                 <div className="space-y-3">
-                  {auditLogs.slice(0, 5).map((log) => (
-                    <div key={log.id} className="flex items-start justify-between text-xs pb-2 border-b border-zinc-100 last:border-0">
+                  {auditLogs.slice(0, 5).map((log, index) => (
+                    <div key={`${log.id}-${log.timestamp}-${index}`} className="flex items-start justify-between text-xs pb-2 border-b border-zinc-100 last:border-0">
                       <div>
                         <span className="font-bold text-zinc-900">{log.action}</span>
                         {log.projectName && <span className="text-zinc-500"> • {log.projectName}</span>}
@@ -542,8 +545,8 @@ export const AdminPage: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100">
-                  {auditLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-zinc-50/50">
+                  {auditLogs.map((log, index) => (
+                    <tr key={`${log.id}-${log.timestamp}-${index}`} className="hover:bg-zinc-50/50">
                       <td className="py-3 px-4 font-mono text-[11px] text-zinc-400">
                         {new Date(log.timestamp).toLocaleString()}
                       </td>

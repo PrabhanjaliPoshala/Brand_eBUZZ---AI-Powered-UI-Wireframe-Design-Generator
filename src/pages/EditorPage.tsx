@@ -34,6 +34,11 @@ export const EditorPage: React.FC = () => {
   const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
   const [activePage, setActivePage] = useState<string>('Home');
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved');
+  const [leftSidebarWidth, setLeftSidebarWidth] = useState(288);
+  const [rightSidebarWidth, setRightSidebarWidth] = useState(304);
+  const [draggingSidebar, setDraggingSidebar] = useState<'left' | 'right' | null>(null);
+  const [isAddingPage, setIsAddingPage] = useState(false);
+  const [newPageName, setNewPageName] = useState('');
 
   // History stack for Undo / Redo
   const [history, setHistory] = useState<WireframeElement[][]>([]);
@@ -234,8 +239,38 @@ export const EditorPage: React.FC = () => {
   const comments = store.getComments(project.id);
   const unresolvedComments = comments.filter((c) => !c.resolved).length;
 
+  useEffect(() => {
+    if (!draggingSidebar) return;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (draggingSidebar === 'left') {
+        const nextWidth = Math.min(Math.max(event.clientX, 220), 420);
+        setLeftSidebarWidth(nextWidth);
+        return;
+      }
+
+      const nextWidth = Math.min(Math.max(window.innerWidth - event.clientX, 220), 420);
+      setRightSidebarWidth(nextWidth);
+    };
+
+    const handlePointerUp = () => {
+      setDraggingSidebar(null);
+      document.body.style.cursor = 'default';
+    };
+
+    document.body.style.cursor = 'col-resize';
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      document.body.style.cursor = 'default';
+    };
+  }, [draggingSidebar]);
+
   return (
-    <div className="h-screen w-screen flex flex-col bg-zinc-100 overflow-hidden text-zinc-900">
+    <div className="h-screen w-screen flex flex-col bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.08),transparent_28%),linear-gradient(180deg,#f8fafc_0%,#f4f4f5_100%)] overflow-hidden text-zinc-900">
       {/* Top Bar */}
       <EditorTopBar
         project={project}
@@ -266,26 +301,33 @@ export const EditorPage: React.FC = () => {
       />
 
       {/* Main Workspace (Left Sidebar + Canvas Stage + Right Sidebar) */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden min-w-0">
         {/* Left Sidebar: Component Library, Layers & Pages */}
-        <ComponentLibrarySidebar
-          onAddComponent={handleAddComponent}
-          elements={elements}
-          selectedElementId={selectedElementId}
-          onSelectElement={setSelectedElementId}
-          onMoveElement={handleMoveElement}
-          onDeleteElement={handleDeleteElement}
-          pages={pagesList}
-          activePage={activePage}
-          onSelectPage={handleSelectPage}
-          onAddPage={handleAddPage}
-        />
+        <div className="relative flex-shrink-0" style={{ width: leftSidebarWidth, minWidth: 220, maxWidth: 420 }}>
+          <ComponentLibrarySidebar
+            onAddComponent={handleAddComponent}
+            elements={elements}
+            selectedElementId={selectedElementId}
+            onSelectElement={setSelectedElementId}
+            onMoveElement={handleMoveElement}
+            onDeleteElement={handleDeleteElement}
+            pages={pagesList}
+            activePage={activePage}
+            onSelectPage={handleSelectPage}
+            onAddPage={handleAddPage}
+          />
+          <div
+            onMouseDown={() => setDraggingSidebar('left')}
+            className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize bg-transparent hover:bg-blue-200/70 active:bg-blue-300"
+            aria-label="Resize left sidebar"
+          />
+        </div>
 
         {/* Center Canvas Stage */}
         <div
           id="canvas-viewport"
           onClick={() => setSelectedElementId(null)}
-          className="flex-1 overflow-y-auto bg-zinc-200/70 p-6 md:p-8 flex flex-col items-center justify-start transition-all"
+          className="flex-1 min-w-0 overflow-y-auto bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.06),transparent_35%),rgba(228,228,231,0.55)] p-4 md:p-6 lg:p-8 flex flex-col items-center justify-start transition-all"
         >
           {/* Top Canvas Multi-Page Navigation Bar */}
           <div
@@ -332,17 +374,68 @@ export const EditorPage: React.FC = () => {
                 </div>
               ))}
 
-              <button
-                type="button"
-                onClick={() => {
-                  const name = prompt('Enter new page name (e.g. Products, Cart, Checkout, Profile):');
-                  if (name && name.trim()) handleAddPage(name.trim());
-                }}
-                className="px-2.5 py-1.5 rounded-xl text-xs font-medium text-blue-600 hover:bg-blue-50 border border-dashed border-blue-300 flex items-center gap-1 transition"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add Page</span>
-              </button>
+              {isAddingPage ? (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-2 py-1.5"
+                >
+                  <input
+                    autoFocus
+                    type="text"
+                    value={newPageName}
+                    onChange={(e) => setNewPageName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const trimmed = newPageName.trim();
+                        if (trimmed) {
+                          handleAddPage(trimmed);
+                          setNewPageName('');
+                          setIsAddingPage(false);
+                        }
+                      }
+                      if (e.key === 'Escape') {
+                        setIsAddingPage(false);
+                        setNewPageName('');
+                      }
+                    }}
+                    placeholder="Page name"
+                    className="w-36 rounded-lg border border-blue-200 bg-white px-2 py-1 text-xs text-zinc-800 outline-none focus:border-blue-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const trimmed = newPageName.trim();
+                      if (trimmed) {
+                        handleAddPage(trimmed);
+                        setNewPageName('');
+                        setIsAddingPage(false);
+                      }
+                    }}
+                    className="rounded-lg bg-blue-600 px-2.5 py-1 text-[10px] font-bold text-white hover:bg-blue-700"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAddingPage(false);
+                      setNewPageName('');
+                    }}
+                    className="rounded-lg px-2 py-1 text-[10px] font-semibold text-zinc-600 hover:bg-white"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsAddingPage(true)}
+                  className="px-2.5 py-1.5 rounded-xl text-xs font-medium text-blue-600 hover:bg-blue-50 border border-dashed border-blue-300 flex items-center gap-1 transition"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Page</span>
+                </button>
+              )}
             </div>
 
             <div className="hidden sm:flex items-center gap-2 text-xs text-zinc-500 font-mono">
@@ -353,13 +446,14 @@ export const EditorPage: React.FC = () => {
 
           {/* Device Frame Wrapper */}
           <div
-            className={`transition-all duration-200 shadow-xl rounded-2xl overflow-hidden bg-white ${
+            className={`transition-all duration-200 shadow-[0_20px_60px_-20px_rgba(15,23,42,0.35)] rounded-2xl overflow-y-auto overflow-x-hidden bg-white ${
               device !== 'desktop'
                 ? 'border-[10px] border-zinc-800 ring-1 ring-zinc-900/10'
-                : 'border border-zinc-200 w-full max-w-6xl'
+                : 'border border-zinc-200/90 w-full max-w-6xl'
             }`}
             style={{
               width: getCanvasWidth(),
+              maxWidth: '100%',
               transform: `scale(${zoom})`,
               transformOrigin: 'top center',
             }}
@@ -408,12 +502,19 @@ export const EditorPage: React.FC = () => {
         </div>
 
         {/* Right Sidebar: Properties Panel */}
-        <PropertiesPanel
-          selectedElement={selectedElement}
-          onUpdateElement={handleUpdateElement}
-          onDeleteElement={handleDeleteElement}
-          onDuplicateElement={handleDuplicateElement}
-        />
+        <div className="relative flex-shrink-0" style={{ width: rightSidebarWidth, minWidth: 220, maxWidth: 420 }}>
+          <PropertiesPanel
+            selectedElement={selectedElement}
+            onUpdateElement={handleUpdateElement}
+            onDeleteElement={handleDeleteElement}
+            onDuplicateElement={handleDuplicateElement}
+          />
+          <div
+            onMouseDown={() => setDraggingSidebar('right')}
+            className="absolute left-0 top-0 h-full w-1.5 cursor-col-resize bg-transparent hover:bg-blue-200/70 active:bg-blue-300"
+            aria-label="Resize right sidebar"
+          />
+        </div>
       </div>
 
       {/* Modals */}
